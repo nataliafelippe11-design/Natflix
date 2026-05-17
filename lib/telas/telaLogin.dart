@@ -38,6 +38,8 @@ class _TelaLoginState extends State<TelaLogin> {
 
           child: Column(
 
+            mainAxisAlignment: MainAxisAlignment.center,
+
             children: [
 
               // EMAIL
@@ -48,6 +50,7 @@ class _TelaLoginState extends State<TelaLogin> {
                 decoration: InputDecoration(
                   labelText: "E-mail",
                   hintText: "nome@email.com",
+                  border: OutlineInputBorder(),
                 ),
 
                 validator: (value) {
@@ -73,12 +76,13 @@ class _TelaLoginState extends State<TelaLogin> {
 
                 decoration: InputDecoration(
                   labelText: "Senha",
+                  border: OutlineInputBorder(),
                 ),
 
                 validator: (value) {
 
                   if (value == null || value.length < 8) {
-                    return "Senha deve ter 8 caracteres";
+                    return "Senha deve ter pelo menos 8 caracteres";
                   }
 
                   return null;
@@ -101,7 +105,7 @@ class _TelaLoginState extends State<TelaLogin> {
 
                     formKey.currentState!.save();
 
-                    Navigator.push(
+                    Navigator.pushReplacement(
 
                       context,
 
@@ -110,7 +114,6 @@ class _TelaLoginState extends State<TelaLogin> {
                         builder: (context) => TelaInicial(
 
                           username: loginData.username,
-
                         ),
                       ),
                     );

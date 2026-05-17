@@ -7,16 +7,16 @@ class TelaInicial extends StatelessWidget {
   TelaInicial({required this.username});
 
   @override
-  Widget build(BuildContext inContext) {
+  Widget build(BuildContext context) {
 
     // DIALOG FILMES
     Future mostrarFilmes() async {
 
       final selected = await showDialog<String>(
 
-        context: inContext,
+        context: context,
 
-        builder: (BuildContext inContext) {
+        builder: (BuildContext context) {
 
           return SimpleDialog(
 
@@ -28,7 +28,7 @@ class TelaInicial extends StatelessWidget {
 
                 onPressed: () {
 
-                  Navigator.pop(inContext, "Ação");
+                  Navigator.pop(context, "Ação");
                 },
 
                 child: Text("Ação"),
@@ -38,7 +38,7 @@ class TelaInicial extends StatelessWidget {
 
                 onPressed: () {
 
-                  Navigator.pop(inContext, "Comédia");
+                  Navigator.pop(context, "Comédia");
                 },
 
                 child: Text("Comédia"),
@@ -59,9 +59,9 @@ class TelaInicial extends StatelessWidget {
 
       final selected = await showDialog<String>(
 
-        context: inContext,
+        context: context,
 
-        builder: (BuildContext inContext) {
+        builder: (BuildContext context) {
 
           return SimpleDialog(
 
@@ -73,7 +73,7 @@ class TelaInicial extends StatelessWidget {
 
                 onPressed: () {
 
-                  Navigator.pop(inContext, "Drama");
+                  Navigator.pop(context, "Drama");
                 },
 
                 child: Text("Drama"),
@@ -83,10 +83,7 @@ class TelaInicial extends StatelessWidget {
 
                 onPressed: () {
 
-                  Navigator.pop(inContext, "Suspense");
-                },
-
-                child: Text("Suspense");
+                  Navigator.pop(context, "Suspense");
                 },
 
                 child: Text("Suspense"),
@@ -105,7 +102,7 @@ class TelaInicial extends StatelessWidget {
     return Scaffold(
 
       appBar: AppBar(
-        title: Text("Tela Inicial"),
+        title: Text("Natflix"),
       ),
 
       body: Center(
@@ -122,6 +119,7 @@ class TelaInicial extends StatelessWidget {
 
               style: TextStyle(
                 fontSize: 24,
+                fontWeight: FontWeight.bold,
               ),
             ),
 
