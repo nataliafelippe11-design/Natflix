@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'telaFilmes.dart';
+import 'telaSeries.dart';
 
 class TelaInicial extends StatelessWidget {
 
@@ -12,7 +14,7 @@ class TelaInicial extends StatelessWidget {
     // DIALOG FILMES
     Future mostrarFilmes() async {
 
-      final selected = await showDialog<String>(
+      showDialog(
 
         context: context,
 
@@ -24,21 +26,43 @@ class TelaInicial extends StatelessWidget {
 
             children: [
 
+              // AÇÃO
               SimpleDialogOption(
 
                 onPressed: () {
 
-                  Navigator.pop(context, "Ação");
+                  Navigator.push(
+
+                    context,
+
+                    MaterialPageRoute(
+
+                      builder: (context) => TelaFilmes(
+                        categoria: "Ação",
+                      ),
+                    ),
+                  );
                 },
 
                 child: Text("Ação"),
               ),
 
+              // COMÉDIA
               SimpleDialogOption(
 
                 onPressed: () {
 
-                  Navigator.pop(context, "Comédia");
+                  Navigator.push(
+
+                    context,
+
+                    MaterialPageRoute(
+
+                      builder: (context) => TelaFilmes(
+                        categoria: "Comédia",
+                      ),
+                    ),
+                  );
                 },
 
                 child: Text("Comédia"),
@@ -47,17 +71,12 @@ class TelaInicial extends StatelessWidget {
           );
         },
       );
-
-      if (selected != null) {
-
-        print("Filme escolhido: $selected");
-      }
     }
 
     // DIALOG SÉRIES
     Future mostrarSeries() async {
 
-      final selected = await showDialog<String>(
+      showDialog(
 
         context: context,
 
@@ -69,21 +88,39 @@ class TelaInicial extends StatelessWidget {
 
             children: [
 
+              // DRAMA
               SimpleDialogOption(
 
                 onPressed: () {
 
-                  Navigator.pop(context, "Drama");
+                  Navigator.push(
+
+                    context,
+
+                    MaterialPageRoute(
+
+                      builder: (context) => TelaSeries(),
+                    ),
+                  );
                 },
 
                 child: Text("Drama"),
               ),
 
+              // SUSPENSE
               SimpleDialogOption(
 
                 onPressed: () {
 
-                  Navigator.pop(context, "Suspense");
+                  Navigator.push(
+
+                    context,
+
+                    MaterialPageRoute(
+
+                      builder: (context) => TelaSeries(),
+                    ),
+                  );
                 },
 
                 child: Text("Suspense"),
@@ -92,17 +129,77 @@ class TelaInicial extends StatelessWidget {
           );
         },
       );
-
-      if (selected != null) {
-
-        print("Série escolhida: $selected");
-      }
     }
 
     return Scaffold(
 
       appBar: AppBar(
         title: Text("Natflix"),
+      ),
+
+      // MENU LATERAL
+      drawer: Drawer(
+
+        child: ListView(
+
+          children: [
+
+            DrawerHeader(
+
+              child: Text(
+                "Natflix",
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+
+            // FILMES
+            ListTile(
+
+              leading: Icon(Icons.movie),
+
+              title: Text("Filmes"),
+
+              onTap: () {
+
+                Navigator.push(
+
+                  context,
+
+                  MaterialPageRoute(
+
+                    builder: (context) => TelaFilmes(
+                      categoria: "Ação",
+                    ),
+                  ),
+                );
+              },
+            ),
+
+            // SÉRIES
+            ListTile(
+
+              leading: Icon(Icons.tv),
+
+              title: Text("Séries"),
+
+              onTap: () {
+
+                Navigator.push(
+
+                  context,
+
+                  MaterialPageRoute(
+
+                    builder: (context) => TelaSeries(),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
       ),
 
       body: Center(

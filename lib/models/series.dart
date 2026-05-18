@@ -1,10 +1,10 @@
-class Filme {
+class Series {
 
   final String titulo;
   final String descricao;
   final String imagem;
 
-  Filme({
+  Series({
     required this.titulo,
     required this.descricao,
     required this.imagem,
