@@ -4,12 +4,33 @@ import 'telaDetalhes.dart';
 
 class TelaSeries extends StatelessWidget {
 
-  final List<Series> listaSeries = [
+  final String categoria;
+
+  TelaSeries({required this.categoria});
+
+  // SÉRIES DE AÇÃO
+  final List<Series> seriesAcao = [
+
+    Series(
+      titulo: "Grey's Anatomy",
+      descricao: "Médicos salvando vidas.",
+      imagem: "assets/grys.jpg",
+    ),
 
     Series(
       titulo: "Gilmore Girls",
-      descricao: "A vida de mãe e filha.",
+      descricao: "Vida de mãe e filha.",
       imagem: "assets/ggirls.jpg",
+    ),
+  ];
+
+  // SÉRIES DE COMÉDIA
+  final List<Series> seriesComedia = [
+
+    Series(
+      titulo: "Brooklyn 99",
+      descricao: "Polícias resolvendo crimes.",
+      imagem: "assets/b99.jpg",
     ),
 
     Series(
@@ -22,60 +43,56 @@ class TelaSeries extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    // ESCOLHE A LISTA CONFORME A CATEGORIA
+    final List<Series> series = categoria == "Ação"
+        ? seriesAcao
+        : seriesComedia;
+
     return Scaffold(
 
       appBar: AppBar(
-        title: Text("Séries"),
+        title: Text(categoria),
       ),
 
       body: ListView.builder(
 
-        itemCount: listaSeries.length,
+        itemCount: series.length,
 
         itemBuilder: (context, index) {
 
-          final serie = listaSeries[index];
+          final serie = series[index];
 
-          return ListTile(
+          return Card(
 
-            leading: Image.asset(
-              serie.imagem,
-              width: 50,
+            margin: EdgeInsets.all(10),
+
+            child: ListTile(
+
+              leading: Image.asset(
+                serie.imagem,
+                width: 50,
+                fit: BoxFit.cover,
+              ),
+
+              title: Text(serie.titulo),
+
+              subtitle: Text(serie.descricao),
+
+              onTap: () {
+
+                Navigator.push(
+
+                  context,
+
+                  MaterialPageRoute(
+
+                    builder: (context) => TelaDetalhes(
+                      serie: serie,
+                    ),
+                  ),
+                );
+              },
             ),
-
-            title: Text(serie.titulo),
-
-            subtitle: Text(serie.descricao),
-
-            onTap: () {
-
-              showDialog(
-
-                context: context,
-
-                builder: (context) {
-
-                  return AlertDialog(
-
-                    title: Text(serie.titulo),
-
-                    content: Text(serie.descricao),
-
-                    actions: [
-
-                      TextButton(
-
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-
-                        child: Text("Fechar"),
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
           );
         },
       ),

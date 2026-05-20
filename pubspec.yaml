@@ -65,6 +65,8 @@ flutter:
     - assets/gentegrande.jpg
     - assets/batman.jpg
     - assets/ggirls.jpg
+    - assets/b99.jpg
+    - assets/grys.jpg
 
   # To add assets to your application, add an assets section, like this:
   # assets:

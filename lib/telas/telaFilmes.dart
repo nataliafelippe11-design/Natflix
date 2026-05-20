@@ -30,7 +30,7 @@ class TelaFilmes extends StatelessWidget {
     Filme(
       titulo: "As Branquelas",
       descricao: "Dois agentes disfarçados em uma missão.",
-      imagem: "assets/asbranquelas.web",
+      imagem: "assets/asbranquelas.webp",
     ),
 
     Filme(
@@ -87,7 +87,7 @@ class TelaFilmes extends StatelessWidget {
                   MaterialPageRoute(
 
                     builder: (context) => TelaDetalhes(
-                      filme: filme,
+                      filme: filme, serie: null,
                     ),
                   ),
                 );

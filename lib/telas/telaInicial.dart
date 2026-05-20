@@ -99,7 +99,9 @@ class TelaInicial extends StatelessWidget {
 
                     MaterialPageRoute(
 
-                      builder: (context) => TelaSeries(),
+                     builder: (context) => TelaSeries(
+                        categoria: "Drama",
+                      ),
                     ),
                   );
                 },
@@ -118,12 +120,14 @@ class TelaInicial extends StatelessWidget {
 
                     MaterialPageRoute(
 
-                      builder: (context) => TelaSeries(),
+                      builder: (context) => TelaSeries(
+                        categoria: "Comédia",
+                      ),
                     ),
                   );
                 },
 
-                child: Text("Suspense"),
+                child: Text("Comédia"),
               ),
             ],
           );
@@ -171,7 +175,7 @@ class TelaInicial extends StatelessWidget {
                   MaterialPageRoute(
 
                     builder: (context) => TelaFilmes(
-                      categoria: "Ação",
+                      categoria: "Drama",
                     ),
                   ),
                 );
@@ -193,7 +197,9 @@ class TelaInicial extends StatelessWidget {
 
                   MaterialPageRoute(
 
-                    builder: (context) => TelaSeries(),
+                    builder: (context) => TelaSeries(
+                      categoria: "Comédia",
+                      ),
                   ),
                 );
               },

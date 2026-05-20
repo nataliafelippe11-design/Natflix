@@ -1,19 +1,32 @@
 import 'package:flutter/material.dart';
 import '../models/filmes.dart';
+import '../models/series.dart';
 
 class TelaDetalhes extends StatelessWidget {
 
-  final Filme filme;
+  // FILME OU SÉRIE
+  final Filme? filme;
+  final Series? serie;
 
-  TelaDetalhes({required this.filme});
+  TelaDetalhes({
+    this.filme,
+    this.serie,
+  });
 
   @override
   Widget build(BuildContext context) {
 
+    // ESCOLHE QUAL OBJETO ESTÁ SENDO USADO
+    final titulo = filme?.titulo ?? serie!.titulo;
+
+    final descricao = filme?.descricao ?? serie!.descricao;
+
+    final imagem = filme?.imagem ?? serie!.imagem;
+
     return Scaffold(
 
       appBar: AppBar(
-        title: Text(filme.titulo),
+        title: Text(titulo),
       ),
 
       body: Padding(
@@ -25,14 +38,14 @@ class TelaDetalhes extends StatelessWidget {
           children: [
 
             Image.asset(
-              filme.imagem,
+              imagem,
               height: 250,
             ),
 
             SizedBox(height: 20),
 
             Text(
-              filme.titulo,
+              titulo,
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
@@ -42,7 +55,7 @@ class TelaDetalhes extends StatelessWidget {
             SizedBox(height: 20),
 
             Text(
-              filme.descricao,
+              descricao,
               style: TextStyle(fontSize: 18),
             ),
           ],
