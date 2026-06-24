@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'telaFilmes.dart';
 import 'telaSeries.dart';
+import 'telaPerfil.dart';
 
 class TelaInicial extends StatelessWidget {
 
@@ -143,71 +144,83 @@ class TelaInicial extends StatelessWidget {
 
       // MENU LATERAL
       drawer: Drawer(
+  child: ListView(
+    children: [
 
-        child: ListView(
-
-          children: [
-
-            DrawerHeader(
-
-              child: Text(
-                "Natflix",
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-
-            // FILMES
-            ListTile(
-
-              leading: Icon(Icons.movie),
-
-              title: Text("Filmes"),
-
-              onTap: () {
-
-                Navigator.push(
-
-                  context,
-
-                  MaterialPageRoute(
-
-                    builder: (context) => TelaFilmes(
-                      categoria: "Drama",
-                    ),
-                  ),
-                );
-              },
-            ),
-
-            // SÉRIES
-            ListTile(
-
-              leading: Icon(Icons.tv),
-
-              title: Text("Séries"),
-
-              onTap: () {
-
-                Navigator.push(
-
-                  context,
-
-                  MaterialPageRoute(
-
-                    builder: (context) => TelaSeries(
-                      categoria: "Comédia",
-                      ),
-                  ),
-                );
-              },
-            ),
-          ],
+      DrawerHeader(
+        child: Text(
+          "Natflix",
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
 
+      // FILMES
+      ListTile(
+        leading: Icon(Icons.movie),
+        title: Text("Filmes"),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TelaFilmes(
+                categoria: "Drama",
+              ),
+            ),
+          );
+        },
+      ),
+
+      // SÉRIES
+      ListTile(
+        leading: Icon(Icons.tv),
+        title: Text("Séries"),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TelaSeries(
+                categoria: "Comédia",
+              ),
+            ),
+          );
+        },
+      ),
+
+      Divider(),
+
+      // PERFIL
+      ListTile(
+        leading: Icon(Icons.person),
+        title: Text("Perfil"),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const TelaPerfil(),
+            ),
+          );
+        },
+      ),
+
+      // FAVORITOS
+      ListTile(
+        leading: Icon(Icons.favorite),
+        title: Text("Favoritos"),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const TelaFavoritos(),
+            ),
+          );
+        },
+      ),
+    ],
+  ),
+),
       body: Center(
 
         child: Column(
