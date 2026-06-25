@@ -69,11 +69,11 @@ class _TelaPerfilState extends State<TelaPerfil> {
             const SizedBox(height: 10),
 
             const Text(
-              "Filme favorito: Vingadores: Ultimato",
+              "Filme favorito: As Branquelas",
             ),
 
             const Text(
-              "Série favorita: Stranger Things",
+              "Série favorita: The Office",
             ),
 
             const SizedBox(height: 30),
