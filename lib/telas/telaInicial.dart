@@ -1,7 +1,9 @@
+import 'package:aula13infoa/telas/telaFavoritos.dart';
 import 'package:flutter/material.dart';
 import 'telaFilmes.dart';
 import 'telaSeries.dart';
 import 'telaPerfil.dart';
+import 'telaFavoritos.dart';
 
 class TelaInicial extends StatelessWidget {
 

@@ -9,7 +9,7 @@ class TelaSeries extends StatelessWidget {
   TelaSeries({required this.categoria});
 
   // SÉRIES DE AÇÃO
-  final List<Series> seriesAcao = [
+  final List<Series> seriesDrama = [
 
     Series(
       titulo: "Grey's Anatomy",
@@ -44,8 +44,8 @@ class TelaSeries extends StatelessWidget {
   Widget build(BuildContext context) {
 
     // ESCOLHE A LISTA CONFORME A CATEGORIA
-    final List<Series> series = categoria == "Ação"
-        ? seriesAcao
+    final List<Series> series = categoria == "Drama"
+        ? seriesDrama
         : seriesComedia;
 
     return Scaffold(
