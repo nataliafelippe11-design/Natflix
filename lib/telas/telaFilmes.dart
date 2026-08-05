@@ -14,13 +14,13 @@ class TelaFilmes extends StatelessWidget {
     Filme(
       titulo: "Batman",
       descricao: "O cavaleiro das trevas protege Gotham.",
-      imagem: "assets/batman.jpg",
+      imagem: "assets/batman.jpg", categoria: '',
     ),
 
     Filme(
       titulo: "Vingadores",
       descricao: "Heróis salvando o mundo.",
-      imagem: "assets/vingadores.jpg",
+      imagem: "assets/vingadores.jpg", categoria: '',
     ),
   ];
 
@@ -30,13 +30,13 @@ class TelaFilmes extends StatelessWidget {
     Filme(
       titulo: "As Branquelas",
       descricao: "Dois agentes disfarçados em uma missão.",
-      imagem: "assets/asbranquelas.webp",
+      imagem: "assets/asbranquelas.webp", categoria: '',
     ),
 
     Filme(
       titulo: "Gente Grande",
       descricao: "Amigos revivendo momentos da infância.",
-      imagem: "assets/gentegrande.jpg",
+      imagem: "assets/gentegrande.jpg", categoria: '',
     ),
   ];
 

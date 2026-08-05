@@ -4,6 +4,7 @@ import 'telaFilmes.dart';
 import 'telaSeries.dart';
 import 'telaPerfil.dart';
 import 'telaFavoritos.dart';
+import 'telaCadastroFilme.dart';
 
 class TelaInicial extends StatelessWidget {
 
