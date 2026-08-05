@@ -1,101 +1,131 @@
 import 'package:flutter/material.dart';
+
+import '../bancosDados/bancoDados.dart';
 import '../models/filmes.dart';
 import 'telaDetalhes.dart';
 
-class TelaFilmes extends StatelessWidget {
-
+class TelaFilmes extends StatefulWidget {
   final String categoria;
 
-  TelaFilmes({required this.categoria});
+  const TelaFilmes({
+    super.key,
+    required this.categoria,
+  });
 
-  // FILMES DE AÇÃO
-  final List<Filme> filmesAcao = [
+  @override
+  State<TelaFilmes> createState() => _TelaFilmesState();
+}
 
-    Filme(
-      titulo: "Batman",
-      descricao: "O cavaleiro das trevas protege Gotham.",
-      imagem: "assets/batman.jpg", categoria: '',
-    ),
+class _TelaFilmesState extends State<TelaFilmes> {
+  late DatabaseHandler handler;
 
-    Filme(
-      titulo: "Vingadores",
-      descricao: "Heróis salvando o mundo.",
-      imagem: "assets/vingadores.jpg", categoria: '',
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
 
-  // FILMES DE COMÉDIA
-  final List<Filme> filmesComedia = [
+    handler = DatabaseHandler();
 
-    Filme(
-      titulo: "As Branquelas",
-      descricao: "Dois agentes disfarçados em uma missão.",
-      imagem: "assets/asbranquelas.webp", categoria: '',
-    ),
-
-    Filme(
-      titulo: "Gente Grande",
-      descricao: "Amigos revivendo momentos da infância.",
-      imagem: "assets/gentegrande.jpg", categoria: '',
-    ),
-  ];
+    handler.initializeDB().whenComplete(() {
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    // ESCOLHE A LISTA CONFORME A CATEGORIA
-    final List<Filme> filmes = categoria == "Ação"
-        ? filmesAcao
-        : filmesComedia;
-
     return Scaffold(
-
       appBar: AppBar(
-        title: Text(categoria),
+        title: Text(widget.categoria),
       ),
 
-      body: ListView.builder(
+      body: FutureBuilder<List<Filme>>(
+        future: handler.retrieveFilme(),
 
-        itemCount: filmes.length,
+        builder: (context, snapshot) {
 
-        itemBuilder: (context, index) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-          final filme = filmes[index];
+          if (snapshot.hasError) {
+            return const Center(
+              child: Text("Erro ao carregar os filmes."),
+            );
+          }
 
-          return Card(
+          if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const Center(
+              child: Text("Nenhum filme cadastrado."),
+            );
+          }
 
-            margin: EdgeInsets.all(10),
+          List<Filme> filmes = snapshot.data!
+              .where((filme) => filme.categoria == widget.categoria)
+              .toList();
 
-            child: ListTile(
-
-              leading: Image.asset(
-                filme.imagem,
-                width: 50,
-                fit: BoxFit.cover,
+          if (filmes.isEmpty) {
+            return Center(
+              child: Text(
+                "Nenhum filme da categoria ${widget.categoria}.",
               ),
+            );
+          }
 
-              title: Text(filme.titulo),
+          return ListView.builder(
+            itemCount: filmes.length,
 
-              subtitle: Text(filme.descricao),
+            itemBuilder: (context, index) {
 
-              onTap: () {
+              Filme filme = filmes[index];
 
-                Navigator.push(
+              return Card(
+                margin: const EdgeInsets.all(10),
 
-                  context,
+                child: ListTile(
 
-                  MaterialPageRoute(
-
-                    builder: (context) => TelaDetalhes(
-                      filme: filme, serie: null,
-                    ),
+                  leading: Image.asset(
+                    filme.imagem ?? "",
+                    width: 50,
+                    fit: BoxFit.cover,
                   ),
-                );
-              },
-            ),
+
+                  title: Text(filme.titulo),
+
+                  subtitle: Text(filme.descricao),
+
+                  onTap: () {
+
+                    Navigator.push(
+
+                      context,
+
+                      MaterialPageRoute(
+
+                        builder: (context) => TelaDetalhes(
+                          filme: filme,
+                        ),
+
+                      ),
+
+                    );
+
+                  },
+
+                ),
+
+              );
+
+            },
+
           );
+
         },
+
       ),
+
     );
+
   }
+
 }
