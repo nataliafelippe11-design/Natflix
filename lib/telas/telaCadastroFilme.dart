@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../bancosDados/bancoDados.dart';
+import '../bancosDados/bancoFilme.dart';
 import '../models/filmes.dart';
 import 'telaInicial.dart';
 import 'telaFilmes.dart';
-import 'telaSeries.dart';
+import 'telaSeries.dart' hide TelaFilmes;
 import 'telaPerfil.dart';
 import 'telaFavoritos.dart';
 

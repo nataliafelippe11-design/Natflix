@@ -6,7 +6,7 @@ class TelaDetalhes extends StatelessWidget {
 
   // FILME OU SÉRIE
   final Filme? filme;
-  final Series? serie;
+  final Serie? serie;
 
   TelaDetalhes({
     this.filme,
@@ -38,7 +38,7 @@ class TelaDetalhes extends StatelessWidget {
           children: [
 
             Image.asset(
-              imagem,
+              imagem!,
               height: 250,
             ),
 

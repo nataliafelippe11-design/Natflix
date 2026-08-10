@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../bancosDados/bancoDados.dart';
-import '../models/filmes.dart';
+import '../bancosDados/bancoSerie.dart';
+import '../models/series.dart';
 import 'telaInicial.dart';
 import 'telaFilmes.dart';
 import 'telaSeries.dart';
@@ -11,27 +11,28 @@ class TelaCadastroSerie extends StatefulWidget {
   const TelaCadastroSerie({super.key});
 
   @override
-  State<TelaCadastroFilme> createState() => _TelaCadastroFilmeState();
+  State<TelaCadastroSerie> createState() => _TelaCadastroSerieState();
 }
 
-class _TelaCadastroFilmeState extends State<TelaCadastroFilme> {
+class _TelaCadastroSerieState extends State<TelaCadastroSerie> {
 
   final tituloController = TextEditingController();
   final categoriaController = TextEditingController();
   final descricaoController = TextEditingController();
   final imagemController = TextEditingController();
 
-  late DatabaseHandler handler;
+  late DatabaseSeriesHandler handler;
 
   @override
   void initState() {
     super.initState();
-    handler = DatabaseHandler();
+
+    handler = DatabaseSeriesHandler();
   }
 
-  Future<void> salvarFilme() async {
+  Future<void> salvarSerie() async {
 
-    Filme filme = Filme(
+    Serie serie = Serie(
 
       titulo: tituloController.text,
 
@@ -43,12 +44,12 @@ class _TelaCadastroFilmeState extends State<TelaCadastroFilme> {
 
     );
 
-    await handler.insertFilme([filme]);
+    await handler.insertSeries([serie]);
 
     ScaffoldMessenger.of(context).showSnackBar(
 
       const SnackBar(
-        content: Text("Filme cadastrado com sucesso!"),
+        content: Text("Série cadastrada com sucesso!"),
       ),
 
     );
@@ -60,190 +61,324 @@ class _TelaCadastroFilmeState extends State<TelaCadastroFilme> {
   }
 
   @override
-Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
 
-  return Scaffold(
+    return Scaffold(
 
-    drawer: Drawer(
-      child: ListView(
-        children: [
+      drawer: Drawer(
 
-          DrawerHeader(
-            decoration: const BoxDecoration(
-              color: Colors.red,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
+        child: ListView(
 
-                Icon(
-                  Icons.local_movies,
-                  color: Colors.white,
-                  size: 50,
-                ),
+          children: [
 
-                SizedBox(height: 10),
+            DrawerHeader(
 
-                Text(
-                  "Natflix",
-                  style: TextStyle(
+              decoration: const BoxDecoration(
+                color: Colors.red,
+              ),
+
+              child: Column(
+
+                mainAxisAlignment:
+                    MainAxisAlignment.center,
+
+                children: const [
+
+                  Icon(
+                    Icons.local_movies,
                     color: Colors.white,
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
+                    size: 50,
                   ),
-                ),
-              ],
+
+                  SizedBox(height: 10),
+
+                  Text(
+                    "Natflix",
+
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+
+                ],
+              ),
             ),
-          ),
 
-          // TELA INICIAL
-          ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text("Início"),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      TelaInicial(username: "Natália"),
-                ),
-              );
-            },
-          ),
+            // =========================
+            // INÍCIO
+            // =========================
 
-          // FILMES
-          ListTile(
-            leading: const Icon(Icons.movie),
-            title: const Text("Filmes"),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      TelaFilmes(categoria: "Ação"),
-                ),
-              );
-            },
-          ),
+            ListTile(
 
-          // SÉRIES
-          ListTile(
-            leading: const Icon(Icons.tv),
-            title: const Text("Séries"),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      TelaSeries(categoria: "Drama"),
-                ),
-              );
-            },
-          ),
+              leading: const Icon(Icons.home),
 
-          const Divider(),
+              title: const Text("Início"),
 
-          // PERFIL
-          ListTile(
-            leading: const Icon(Icons.person),
-            title: const Text("Perfil"),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      const TelaPerfil(),
-                ),
-              );
-            },
-          ),
+              onTap: () {
 
-          // FAVORITOS
-          ListTile(
-            leading: const Icon(Icons.favorite),
-            title: const Text("Favoritos"),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      const TelaFavoritos(),
-                ),
-              );
-            },
-          ),
+                Navigator.push(
 
-          // CADASTRAR FILME
-          ListTile(
-            leading: const Icon(Icons.library_add),
-            title: const Text("Cadastrar Filme"),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
+                  context,
 
-        ],
+                  MaterialPageRoute(
+
+                    builder: (context) =>
+                        TelaInicial(
+                      username: "Natália",
+                    ),
+
+                  ),
+                );
+              },
+            ),
+
+            ListTile(
+
+              leading: const Icon(Icons.movie),
+
+              title: const Text("Filmes"),
+
+              onTap: () {
+
+                Navigator.push(
+
+                  context,
+
+                  MaterialPageRoute(
+
+                    builder: (context) =>
+                        TelaFilmes(
+                      categoria: "Ação",
+                    ),
+
+                  ),
+                );
+              },
+            ),
+
+            ListTile(
+
+              leading: const Icon(Icons.tv),
+
+              title: const Text("Séries"),
+
+              onTap: () {
+
+                Navigator.push(
+
+                  context,
+
+                  MaterialPageRoute(
+
+                    builder: (context) =>
+                        TelaSeries(
+                      categoria: "Drama",
+                    ),
+
+                  ),
+                );
+              },
+            ),
+
+            const Divider(),
+
+            ListTile(
+
+              leading: const Icon(Icons.person),
+
+              title: const Text("Perfil"),
+
+              onTap: () {
+
+                Navigator.push(
+
+                  context,
+
+                  MaterialPageRoute(
+
+                    builder: (context) =>
+                        const TelaPerfil(),
+
+                  ),
+                );
+              },
+            ),
+
+            // =========================
+            // FAVORITOS
+            // =========================
+
+            ListTile(
+
+              leading: const Icon(Icons.favorite),
+
+              title: const Text("Favoritos"),
+
+              onTap: () {
+
+                Navigator.push(
+
+                  context,
+
+                  MaterialPageRoute(
+
+                    builder: (context) =>
+                        const TelaFavoritos(),
+
+                  ),
+                );
+              },
+            ),
+
+            // =========================
+            // CADASTRAR SÉRIE
+            // =========================
+
+            ListTile(
+
+              leading:
+                  const Icon(Icons.library_add),
+
+              title:
+                  const Text("Cadastrar Série"),
+
+              onTap: () {
+
+                Navigator.pop(context);
+
+              },
+            ),
+
+          ],
+        ),
       ),
-    ),
 
-    appBar: AppBar(
-      title: const Text("Cadastrar Filme"),
-    ),
+      // =========================
+      // APP BAR
+      // =========================
 
-    body: Padding(
-      padding: const EdgeInsets.all(20),
+      appBar: AppBar(
 
-      child: Column(
+        title:
+            const Text("Cadastrar Série"),
 
-        children: [
-
-          TextField(
-            controller: tituloController,
-            decoration: const InputDecoration(
-              labelText: "Título",
-              border: OutlineInputBorder(),
-            ),
-          ),
-
-          const SizedBox(height: 15),
-
-          TextField(
-            controller: categoriaController,
-            decoration: const InputDecoration(
-              labelText: "Categoria",
-              border: OutlineInputBorder(),
-            ),
-          ),
-
-          const SizedBox(height: 15),
-
-          TextField(
-            controller: descricaoController,
-            decoration: const InputDecoration(
-              labelText: "Descrição",
-              border: OutlineInputBorder(),
-            ),
-          ),
-
-          const SizedBox(height: 15),
-
-          TextField(
-            controller: imagemController,
-            decoration: const InputDecoration(
-              labelText: "Imagem (assets/arquivo.jpg)",
-              border: OutlineInputBorder(),
-            ),
-          ),
-
-          const SizedBox(height: 30),
-
-          ElevatedButton(
-            onPressed: salvarFilme,
-            child: const Text("Salvar Filme"),
-          ),
-
-        ],
       ),
-    ),
-  );
-}}
+
+      // =========================
+      // FORMULÁRIO
+      // =========================
+
+      body: Padding(
+
+        padding:
+            const EdgeInsets.all(20),
+
+        child: Column(
+
+          children: [
+
+            // TÍTULO
+
+            TextField(
+
+              controller:
+                  tituloController,
+
+              decoration:
+                  const InputDecoration(
+
+                labelText:
+                    "Título",
+
+                border:
+                    OutlineInputBorder(),
+
+              ),
+            ),
+
+            const SizedBox(height: 15),
+
+            // CATEGORIA
+
+            TextField(
+
+              controller:
+                  categoriaController,
+
+              decoration:
+                  const InputDecoration(
+
+                labelText:
+                    "Categoria",
+
+                border:
+                    OutlineInputBorder(),
+
+              ),
+            ),
+
+            const SizedBox(height: 15),
+
+            // DESCRIÇÃO
+
+            TextField(
+
+              controller:
+                  descricaoController,
+
+              decoration:
+                  const InputDecoration(
+
+                labelText:
+                    "Descrição",
+
+                border:
+                    OutlineInputBorder(),
+
+              ),
+            ),
+
+            const SizedBox(height: 15),
+
+            // IMAGEM
+
+            TextField(
+
+              controller:
+                  imagemController,
+
+              decoration:
+                  const InputDecoration(
+
+                labelText:
+                    "Imagem (assets/arquivo.jpg)",
+
+                border:
+                    OutlineInputBorder(),
+
+              ),
+            ),
+
+            const SizedBox(height: 30),
+
+            // BOTÃO SALVAR
+
+            ElevatedButton(
+
+              onPressed:
+                  salvarSerie,
+
+              child:
+                  const Text("Salvar Série"),
+
+            ),
+
+          ],
+        ),
+      ),
+    );
+  }
+}
+

@@ -1,98 +1,179 @@
 import 'package:flutter/material.dart';
+import '../bancosDados/bancoSerie.dart';
 import '../models/series.dart';
 import 'telaDetalhes.dart';
 
-class TelaSeries extends StatelessWidget {
+class TelaSeries extends StatefulWidget {
 
   final String categoria;
 
-  TelaSeries({required this.categoria});
+  const TelaSeries({
+    super.key,
+    required this.categoria,
+  });
 
-  // SÉRIES DE AÇÃO
-  final List<Series> seriesDrama = [
+  @override
+  State<TelaSeries> createState() => _TelaSeriesState();
+}
 
-    Series(
-      titulo: "Grey's Anatomy",
-      descricao: "Médicos salvando vidas.",
-      imagem: "assets/grys.jpg",
-    ),
+class _TelaSeriesState extends State<TelaSeries> {
 
-    Series(
-      titulo: "Gilmore Girls",
-      descricao: "Vida de mãe e filha.",
-      imagem: "assets/ggirls.jpg",
-    ),
-  ];
+  late DatabaseSeriesHandler handler;
 
-  // SÉRIES DE COMÉDIA
-  final List<Series> seriesComedia = [
+  @override
+  void initState() {
+    super.initState();
 
-    Series(
-      titulo: "Brooklyn 99",
-      descricao: "Polícias resolvendo crimes.",
-      imagem: "assets/b99.jpg",
-    ),
+    handler = DatabaseSeriesHandler();
 
-    Series(
-      titulo: "The Office",
-      descricao: "Vida de escritório.",
-      imagem: "assets/theoffice.webp",
-    ),
-  ];
+    handler.initializeDB().whenComplete(() {
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
 
-    // ESCOLHE A LISTA CONFORME A CATEGORIA
-    final List<Series> series = categoria == "Drama"
-        ? seriesDrama
-        : seriesComedia;
-
     return Scaffold(
 
       appBar: AppBar(
-        title: Text(categoria),
+        title: Text(widget.categoria),
       ),
 
-      body: ListView.builder(
+      body: FutureBuilder<List<Serie>>(
 
-        itemCount: series.length,
+        future: handler.retrieveSeries(),
 
-        itemBuilder: (context, index) {
+        builder: (context, snapshot) {
 
-          final serie = series[index];
+          // =========================
+          // CARREGANDO
+          // =========================
 
-          return Card(
+          if (snapshot.connectionState ==
+              ConnectionState.waiting) {
 
-            margin: EdgeInsets.all(10),
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-            child: ListTile(
+          // =========================
+          // ERRO
+          // =========================
 
-              leading: Image.asset(
-                serie.imagem,
-                width: 50,
-                fit: BoxFit.cover,
+          if (snapshot.hasError) {
+
+            return const Center(
+              child: Text(
+                "Erro ao carregar as séries.",
               ),
+            );
+          }
 
-              title: Text(serie.titulo),
+          // =========================
+          // NENHUMA SÉRIE
+          // =========================
 
-              subtitle: Text(serie.descricao),
+          if (!snapshot.hasData ||
+              snapshot.data!.isEmpty) {
 
-              onTap: () {
+            return const Center(
+              child: Text(
+                "Nenhuma série cadastrada.",
+              ),
+            );
+          }
 
-                Navigator.push(
+          // =========================
+          // FILTRA A CATEGORIA
+          // =========================
 
-                  context,
+          List<Serie> series = snapshot.data!
+              .where(
+                (serie) =>
+                    serie.categoria ==
+                    widget.categoria,
+              )
+              .toList();
 
-                  MaterialPageRoute(
+          // =========================
+          // CATEGORIA SEM SÉRIES
+          // =========================
 
-                    builder: (context) => TelaDetalhes(
-                      serie: serie,
-                    ),
+          if (series.isEmpty) {
+
+            return Center(
+              child: Text(
+                "Nenhuma série da categoria "
+                "${widget.categoria}.",
+              ),
+            );
+          }
+
+          // =========================
+          // LISTA DE SÉRIES
+          // =========================
+
+          return ListView.builder(
+
+            itemCount: series.length,
+
+            itemBuilder: (context, index) {
+
+              final Serie serie =
+                  series[index];
+
+              return Card(
+
+                margin:
+                    const EdgeInsets.all(10),
+
+                child: ListTile(
+
+                  // IMAGEM
+                  leading: serie.imagem != null &&
+                          serie.imagem!.isNotEmpty
+                      ? Image.asset(
+                          serie.imagem!,
+                          width: 50,
+                          fit: BoxFit.cover,
+                        )
+                      : const Icon(
+                          Icons.tv,
+                          size: 40,
+                        ),
+
+                  // TÍTULO
+                  title: Text(
+                    serie.titulo,
                   ),
-                );
-              },
-            ),
+
+                  // DESCRIÇÃO
+                  subtitle: Text(
+                    serie.descricao,
+                  ),
+
+                  // DETALHES
+                  onTap: () {
+
+                    Navigator.push(
+
+                      context,
+
+                      MaterialPageRoute(
+
+                        builder: (context) =>
+                            TelaDetalhes(
+                          serie: serie,
+                        ),
+
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
           );
         },
       ),

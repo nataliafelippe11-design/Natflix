@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../bancosDados/bancoDados.dart';
+import '../bancosDados/bancoFilme.dart';
 import '../models/filmes.dart';
 import 'telaDetalhes.dart';
 
