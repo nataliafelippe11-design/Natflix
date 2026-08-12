@@ -1,75 +1,84 @@
-import 'package:aula13infoa/telas/telaFavoritos.dart';
 import 'package:flutter/material.dart';
 import 'telaFilmes.dart';
 import 'telaSeries.dart';
 import 'telaPerfil.dart';
 import 'telaFavoritos.dart';
 import 'telaCadastroFilme.dart';
+import 'telaCadastroSerie.dart';
 
 class TelaInicial extends StatelessWidget {
 
   final String username;
 
-  TelaInicial({required this.username});
+  const TelaInicial({
+    super.key,
+    required this.username,
+  });
 
   @override
   Widget build(BuildContext context) {
 
+    // ==========================================
     // DIALOG FILMES
-    Future mostrarFilmes() async {
+    // ==========================================
+
+    Future<void> mostrarFilmes() async {
 
       showDialog(
-
         context: context,
 
         builder: (BuildContext context) {
 
           return SimpleDialog(
 
-            title: Text("Filmes"),
+            title: const Text("Filmes"),
 
             children: [
 
+              // ==============================
               // AÇÃO
+              // ==============================
+
               SimpleDialogOption(
 
                 onPressed: () {
 
                   Navigator.push(
-
                     context,
 
                     MaterialPageRoute(
-
                       builder: (context) => TelaFilmes(
                         categoria: "Ação",
                       ),
                     ),
                   );
+
                 },
 
-                child: Text("Ação"),
+                child: const Text("Ação"),
               ),
 
+              // ==============================
               // COMÉDIA
+              // ==============================
+
               SimpleDialogOption(
 
                 onPressed: () {
 
                   Navigator.push(
-
                     context,
 
                     MaterialPageRoute(
-
                       builder: (context) => TelaFilmes(
                         categoria: "Comédia",
                       ),
                     ),
                   );
+
                 },
 
-                child: Text("Comédia"),
+                child: const Text("Comédia"),
               ),
             ],
           );
@@ -77,61 +86,67 @@ class TelaInicial extends StatelessWidget {
       );
     }
 
+    // ==========================================
     // DIALOG SÉRIES
-    Future mostrarSeries() async {
+    // ==========================================
+
+    Future<void> mostrarSeries() async {
 
       showDialog(
-
         context: context,
 
         builder: (BuildContext context) {
 
           return SimpleDialog(
 
-            title: Text("Séries"),
+            title: const Text("Séries"),
 
             children: [
 
+              // ==============================
               // DRAMA
+              // ==============================
+
               SimpleDialogOption(
 
                 onPressed: () {
 
                   Navigator.push(
-
                     context,
 
                     MaterialPageRoute(
-
-                     builder: (context) => TelaSeries(
+                      builder: (context) => TelaSeries(
                         categoria: "Drama",
                       ),
                     ),
                   );
+
                 },
 
-                child: Text("Drama"),
+                child: const Text("Drama"),
               ),
 
-              // SUSPENSE
+              // ==============================
+              // COMÉDIA
+              // ==============================
+
               SimpleDialogOption(
 
                 onPressed: () {
 
                   Navigator.push(
-
                     context,
 
                     MaterialPageRoute(
-
                       builder: (context) => TelaSeries(
                         categoria: "Comédia",
                       ),
                     ),
                   );
+
                 },
 
-                child: Text("Comédia"),
+                child: const Text("Comédia"),
               ),
             ],
           );
@@ -139,127 +154,343 @@ class TelaInicial extends StatelessWidget {
       );
     }
 
+    // ==========================================
+    // SCAFFOLD
+    // ==========================================
+
     return Scaffold(
 
-      appBar: AppBar(
-        title: Text("Natflix"),
-      ),
+      // ==========================================
+      // DRAWER
+      // ==========================================
 
-      // MENU LATERAL
       drawer: Drawer(
-  child: ListView(
-    children: [
 
-      DrawerHeader(
-        child: Text(
-          "Natflix",
-          style: TextStyle(
-            fontSize: 28,
-            fontWeight: FontWeight.bold,
-          ),
+        child: ListView(
+
+          children: [
+
+            // ==================================
+            // CABEÇALHO
+            // ==================================
+
+            DrawerHeader(
+
+              decoration: const BoxDecoration(
+                color: Colors.red,
+              ),
+
+              child: Column(
+
+                mainAxisAlignment:
+                    MainAxisAlignment.center,
+
+                children: const [
+
+                  Icon(
+                    Icons.local_movies,
+                    color: Colors.white,
+                    size: 50,
+                  ),
+
+                  SizedBox(height: 10),
+
+                  Text(
+                    "Natflix",
+
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // ==================================
+            // INÍCIO
+            // ==================================
+
+            ListTile(
+
+              leading: const Icon(
+                Icons.home,
+              ),
+
+              title: const Text(
+                "Início",
+              ),
+
+              onTap: () {
+
+                Navigator.pop(context);
+
+              },
+            ),
+
+            // ==================================
+            // FILMES
+            // ==================================
+
+            ListTile(
+
+              leading: const Icon(
+                Icons.movie,
+              ),
+
+              title: const Text(
+                "Filmes",
+              ),
+
+              onTap: () {
+
+                Navigator.push(
+
+                  context,
+
+                  MaterialPageRoute(
+
+                    builder: (context) =>
+                        TelaFilmes(
+                      categoria: "Ação",
+                    ),
+
+                  ),
+                );
+              },
+            ),
+
+            // ==================================
+            // SÉRIES
+            // ==================================
+
+            ListTile(
+
+              leading: const Icon(
+                Icons.tv,
+              ),
+
+              title: const Text(
+                "Séries",
+              ),
+
+              onTap: () {
+
+                Navigator.push(
+
+                  context,
+
+                  MaterialPageRoute(
+
+                    builder: (context) =>
+                        TelaSeries(
+                      categoria: "Drama",
+                    ),
+
+                  ),
+                );
+              },
+            ),
+
+            // ==================================
+            // CADASTRAR FILME
+            // ==================================
+
+            ListTile(
+
+              leading: const Icon(
+                Icons.add_box,
+              ),
+
+              title: const Text(
+                "Cadastrar Filme",
+              ),
+
+              onTap: () {
+
+                Navigator.push(
+
+                  context,
+
+                  MaterialPageRoute(
+
+                    builder: (context) =>
+                        const TelaCadastroFilme(),
+
+                  ),
+                );
+              },
+            ),
+
+            // ==================================
+            // CADASTRAR SÉRIE
+            // ==================================
+
+            ListTile(
+
+              leading: const Icon(
+                Icons.add_box,
+              ),
+
+              title: const Text(
+                "Cadastrar Série",
+              ),
+
+              onTap: () {
+
+                Navigator.push(
+
+                  context,
+
+                  MaterialPageRoute(
+
+                    builder: (context) =>
+                        const TelaCadastroSerie(),
+
+                  ),
+                );
+              },
+            ),
+
+            const Divider(),
+
+            // ==================================
+            // PERFIL
+            // ==================================
+
+            ListTile(
+
+              leading: const Icon(
+                Icons.person,
+              ),
+
+              title: const Text(
+                "Perfil",
+              ),
+
+              onTap: () {
+
+                Navigator.push(
+
+                  context,
+
+                  MaterialPageRoute(
+
+                    builder: (context) =>
+                        const TelaPerfil(),
+
+                  ),
+                );
+              },
+            ),
+
+            // ==================================
+            // FAVORITOS
+            // ==================================
+
+            ListTile(
+
+              leading: const Icon(
+                Icons.favorite,
+              ),
+
+              title: const Text(
+                "Favoritos",
+              ),
+
+              onTap: () {
+
+                Navigator.push(
+
+                  context,
+
+                  MaterialPageRoute(
+
+                    builder: (context) =>
+                        const TelaFavoritos(),
+
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ),
 
-      // FILMES
-      ListTile(
-        leading: Icon(Icons.movie),
-        title: Text("Filmes"),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TelaFilmes(
-                categoria: "Drama",
-              ),
-            ),
-          );
-        },
+      // ==========================================
+      // APP BAR
+      // ==========================================
+
+      appBar: AppBar(
+
+        title: const Text(
+          "Natflix",
+        ),
       ),
 
-      // SÉRIES
-      ListTile(
-        leading: Icon(Icons.tv),
-        title: Text("Séries"),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TelaSeries(
-                categoria: "Comédia",
-              ),
-            ),
-          );
-        },
-      ),
+      // ==========================================
+      // CONTEÚDO
+      // ==========================================
 
-      Divider(),
-
-      // PERFIL
-      ListTile(
-        leading: Icon(Icons.person),
-        title: Text("Perfil"),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const TelaPerfil(),
-            ),
-          );
-        },
-      ),
-
-      // FAVORITOS
-      ListTile(
-        leading: Icon(Icons.favorite),
-        title: Text("Favoritos"),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const TelaFavoritos(),
-            ),
-          );
-        },
-      ),
-    ],
-  ),
-),
       body: Center(
 
         child: Column(
 
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment:
+              MainAxisAlignment.center,
 
           children: [
+
+            // ==================================
+            // USUÁRIO
+            // ==================================
 
             Text(
 
               "Bem-vindo, $username",
 
-              style: TextStyle(
+              style: const TextStyle(
+
                 fontSize: 24,
-                fontWeight: FontWeight.bold,
+
+                fontWeight:
+                    FontWeight.bold,
               ),
             ),
 
-            SizedBox(height: 40),
+            const SizedBox(
+              height: 40,
+            ),
 
+            // ==================================
             // BOTÃO FILMES
+            // ==================================
+
             ElevatedButton(
 
               onPressed: mostrarFilmes,
 
-              child: Text("Filmes"),
+              child: const Text(
+                "Filmes",
+              ),
             ),
 
-            SizedBox(height: 20),
+            const SizedBox(
+              height: 20,
+            ),
 
+            // ==================================
             // BOTÃO SÉRIES
+            // ==================================
+
             ElevatedButton(
 
               onPressed: mostrarSeries,
 
-              child: Text("Séries"),
+              child: const Text(
+                "Séries",
+              ),
             ),
           ],
         ),

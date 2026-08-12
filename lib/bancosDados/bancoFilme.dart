@@ -1,60 +1,72 @@
-import 'package:aula13infoa/models/series.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import '../models/filmes.dart';
 
 class DatabaseHandler {
-
   Future<Database> initializeDB() async {
-
     String path = await getDatabasesPath();
 
-    print(path);
-
     return openDatabase(
-
       join(path, 'example.db'),
 
-      onCreate: (database, version) async {
+      version: 2,
 
-        await database.execute(
-          '''CREATE TABLE filmes(
+      onCreate: (database, version) async {
+        await database.execute('''
+          CREATE TABLE filmes(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            titulo TEXT NOT NULL,
+            categoria TEXT NOT NULL,
+            descricao TEXT NOT NULL,
+            imagem TEXT
+          )
+        ''');
+
+        await database.execute('''
+          CREATE TABLE series(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            titulo TEXT NOT NULL,
+            categoria TEXT NOT NULL,
+            descricao TEXT NOT NULL,
+            imagem TEXT
+          )
+        ''');
+      },
+
+      onUpgrade: (database, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await database.execute('''
+            CREATE TABLE series(
               id INTEGER PRIMARY KEY AUTOINCREMENT,
               titulo TEXT NOT NULL,
               categoria TEXT NOT NULL,
               descricao TEXT NOT NULL,
               imagem TEXT
-          )''',
-        );
-
+            )
+          ''');
+        }
       },
-
-      version: 1,
     );
   }
 
-  // CREATE - Cadastra filmes
+  // CREATE
   Future<int> insertFilme(List<Filme> filmes) async {
+    final Database db = await initializeDB();
 
     int result = 0;
 
-    final Database db = await initializeDB();
-
     for (var filme in filmes) {
-
       result = await db.insert(
         'filmes',
         filme.toMap(),
       );
-
     }
 
     return result;
   }
 
-  // READ - Busca filmes
+  // READ
   Future<List<Filme>> retrieveFilme() async {
-
     final Database db = await initializeDB();
 
     final List<Map<String, Object?>> queryResult =
@@ -65,14 +77,25 @@ class DatabaseHandler {
         .toList();
   }
 
-  // DELETE - Exclui filme
-  Future<void> deleteFilme(int id) async {
+  // UPDATE
+  Future<int> updateFilme(Filme filme) async {
+    final Database db = await initializeDB();
 
-    final db = await initializeDB();
+    return await db.update(
+      'filmes',
+      filme.toMap(),
+      where: 'id = ?',
+      whereArgs: [filme.id],
+    );
+  }
+
+  // DELETE
+  Future<void> deleteFilme(int id) async {
+    final Database db = await initializeDB();
 
     await db.delete(
       'filmes',
-      where: "id = ?",
+      where: 'id = ?',
       whereArgs: [id],
     );
   }

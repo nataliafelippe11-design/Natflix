@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../bancosDados/bancoSerie.dart';
 import '../models/series.dart';
 import 'telaDetalhes.dart';
+import 'telaCadastroSerie.dart';
 
 class TelaSeries extends StatefulWidget {
 
@@ -18,18 +19,94 @@ class TelaSeries extends StatefulWidget {
 
 class _TelaSeriesState extends State<TelaSeries> {
 
-  late DatabaseSeriesHandler handler;
+  late DatabaseHandler handler;
 
   @override
   void initState() {
     super.initState();
 
-    handler = DatabaseSeriesHandler();
+    handler = DatabaseHandler();
 
     handler.initializeDB().whenComplete(() {
       setState(() {});
     });
   }
+
+  // ==========================================
+  // DELETE - EXCLUIR SÉRIE
+  // ==========================================
+
+  Future<void> excluirSerie(Serie serie) async {
+
+    final confirmar = await showDialog<bool>(
+      context: context,
+
+      builder: (context) {
+
+        return AlertDialog(
+
+          title: const Text(
+            "Excluir Série?",
+          ),
+
+          content: Text(
+            'Deseja realmente excluir "${serie.titulo}"?',
+          ),
+
+          actions: [
+
+            // CANCELAR
+            TextButton(
+
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+
+              child: const Text(
+                "Cancelar",
+              ),
+            ),
+
+            // EXCLUIR
+            TextButton(
+
+              onPressed: () {
+                Navigator.pop(context, true);
+              },
+
+              child: const Text(
+                "Excluir",
+              ),
+            ),
+          ],
+        );
+      },
+    );
+
+    // Se confirmou a exclusão
+    if (confirmar == true) {
+
+      await handler.deleteSerie(
+        serie.id!,
+      );
+
+      setState(() {});
+
+      ScaffoldMessenger.of(context).showSnackBar(
+
+        SnackBar(
+          content: Text(
+            "${serie.titulo} foi excluído.",
+          ),
+        ),
+
+      );
+    }
+  }
+
+  // ==========================================
+  // BUILD
+  // ==========================================
 
   @override
   Widget build(BuildContext context) {
@@ -42,13 +119,13 @@ class _TelaSeriesState extends State<TelaSeries> {
 
       body: FutureBuilder<List<Serie>>(
 
-        future: handler.retrieveSeries(),
+        future: handler.retrieveSerie(),
 
         builder: (context, snapshot) {
 
-          // =========================
+          // ==================================
           // CARREGANDO
-          // =========================
+          // ==================================
 
           if (snapshot.connectionState ==
               ConnectionState.waiting) {
@@ -58,9 +135,9 @@ class _TelaSeriesState extends State<TelaSeries> {
             );
           }
 
-          // =========================
+          // ==================================
           // ERRO
-          // =========================
+          // ==================================
 
           if (snapshot.hasError) {
 
@@ -71,9 +148,9 @@ class _TelaSeriesState extends State<TelaSeries> {
             );
           }
 
-          // =========================
+          // ==================================
           // NENHUMA SÉRIE
-          // =========================
+          // ==================================
 
           if (!snapshot.hasData ||
               snapshot.data!.isEmpty) {
@@ -85,35 +162,11 @@ class _TelaSeriesState extends State<TelaSeries> {
             );
           }
 
-          // =========================
-          // FILTRA A CATEGORIA
-          // =========================
+          List<Serie> series = snapshot.data!;
 
-          List<Serie> series = snapshot.data!
-              .where(
-                (serie) =>
-                    serie.categoria ==
-                    widget.categoria,
-              )
-              .toList();
-
-          // =========================
-          // CATEGORIA SEM SÉRIES
-          // =========================
-
-          if (series.isEmpty) {
-
-            return Center(
-              child: Text(
-                "Nenhuma série da categoria "
-                "${widget.categoria}.",
-              ),
-            );
-          }
-
-          // =========================
+          // ==================================
           // LISTA DE SÉRIES
-          // =========================
+          // ==================================
 
           return ListView.builder(
 
@@ -121,8 +174,7 @@ class _TelaSeriesState extends State<TelaSeries> {
 
             itemBuilder: (context, index) {
 
-              final Serie serie =
-                  series[index];
+              Serie serie = series[index];
 
               return Card(
 
@@ -131,30 +183,116 @@ class _TelaSeriesState extends State<TelaSeries> {
 
                 child: ListTile(
 
+                  // ==================================
                   // IMAGEM
-                  leading: serie.imagem != null &&
-                          serie.imagem!.isNotEmpty
-                      ? Image.asset(
-                          serie.imagem!,
-                          width: 50,
-                          fit: BoxFit.cover,
-                        )
-                      : const Icon(
-                          Icons.tv,
-                          size: 40,
-                        ),
+                  // ==================================
 
+                  
+
+                leading: serie.imagem != null && serie.imagem!.isNotEmpty
+                    ? Image.asset(
+                        serie.imagem!,
+                        width: 50,
+                        height: 70,
+                        fit: BoxFit.cover,
+                      )
+                    : const Icon(
+                        Icons.tv,
+                        size: 40,
+                      ),
+
+
+
+                  // ==================================
                   // TÍTULO
+                  // ==================================
+
                   title: Text(
                     serie.titulo,
                   ),
 
+                  // ==================================
                   // DESCRIÇÃO
+                  // ==================================
+
                   subtitle: Text(
                     serie.descricao,
                   ),
 
+                  // ==================================
+                  // BOTÕES
+                  // ==================================
+
+                  trailing: Row(
+
+                    mainAxisSize:
+                        MainAxisSize.min,
+
+                    children: [
+
+                      // ==============================
+                      // EDITAR
+                      // ==============================
+
+                      IconButton(
+
+                        icon: const Icon(
+                          Icons.edit,
+                        ),
+
+                        tooltip:
+                            "Editar série",
+
+                        onPressed: () async {
+
+                          await Navigator.push(
+
+                            context,
+
+                            MaterialPageRoute(
+
+                              builder:
+                                  (context) =>
+                                      TelaCadastroSerie(
+                                serie: serie,
+                              ),
+
+                            ),
+
+                          );
+
+                          setState(() {});
+                        },
+                      ),
+
+                      // ==============================
+                      // EXCLUIR
+                      // ==============================
+
+                      IconButton(
+
+                        icon: const Icon(
+                          Icons.delete,
+                        ),
+
+                        tooltip:
+                            "Excluir série",
+
+                        onPressed: () {
+
+                          excluirSerie(
+                            serie,
+                          );
+
+                        },
+                      ),
+                    ],
+                  ),
+
+                  // ==================================
                   // DETALHES
+                  // ==================================
+
                   onTap: () {
 
                     Navigator.push(
@@ -163,12 +301,14 @@ class _TelaSeriesState extends State<TelaSeries> {
 
                       MaterialPageRoute(
 
-                        builder: (context) =>
-                            TelaDetalhes(
+                        builder:
+                            (context) =>
+                                TelaDetalhes(
                           serie: serie,
                         ),
 
                       ),
+
                     );
                   },
                 ),

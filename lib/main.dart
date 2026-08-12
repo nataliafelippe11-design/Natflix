@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'telas/telaLogin.dart';
+import 'telas/splashScreen.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
-
       debugShowCheckedModeBanner: false,
 
         theme: ThemeData(
@@ -52,7 +50,7 @@ class MyApp extends StatelessWidget {
             fontFamily: "BebasNeue",
   ),
 
-  home: TelaLogin(),
+  home: const SplashScreen(),
     );
   }
 }

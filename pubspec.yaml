@@ -71,14 +71,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/theoffice.webp
-    - assets/vingadores.jpg
-    - assets/asbranquelas.webp
-    - assets/gentegrande.jpg
-    - assets/batman.jpg
-    - assets/ggirls.jpg
-    - assets/b99.jpg
-    - assets/grys.jpg
+    - assets/natflix_splash.png.png
 
   fonts:
     - family: BebasNeue

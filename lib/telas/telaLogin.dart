@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'telaInicial.dart';
+import '../preferences/preferencesUsuario.dart';
 
 class TelaLogin extends StatefulWidget {
 
@@ -96,31 +97,32 @@ class _TelaLoginState extends State<TelaLogin> {
               SizedBox(height: 30),
 
               ElevatedButton(
+                child: const Text("Login"),
 
-                child: Text("Login"),
-
-                onPressed: () {
+                onPressed: () async {
 
                   if (formKey.currentState!.validate()) {
 
                     formKey.currentState!.save();
 
+                    // SALVA O USUÁRIO
+                    await PreferenciasUsuario.salvarUsuario(
+                      loginData.username,
+                    );
+
+                    // VAI PARA A TELA INICIAL
                     Navigator.pushReplacement(
-
                       context,
-
                       MaterialPageRoute(
-
                         builder: (context) => TelaInicial(
-
                           username: loginData.username,
                         ),
                       ),
                     );
                   }
                 },
-              ),
-            ],
+              )
+            ]
           ),
         ),
       ),
