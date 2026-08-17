@@ -1,37 +1,59 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
+import '../preferences/preferencesUsuario.dart';
+import 'telaInicial.dart';
 import 'telaLogin.dart';
 
-class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+class TelaSplash extends StatefulWidget {
+  const TelaSplash({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<TelaSplash> createState() => _TelaSplashState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
-
+class _TelaSplashState extends State<TelaSplash> {
   @override
   void initState() {
     super.initState();
+    verificarSessao();
+  }
 
-    Timer(const Duration(seconds: 2), () {
+  Future<void> verificarSessao() async {
+
+    await Future.delayed(const Duration(seconds: 2));
+
+    // Busca o usuário salvo
+    String? usuarioSalvo = await PreferenciasUsuario.obterUsuario();
+
+    if (!mounted) return;
+
+    // Se encontrou o usuário, vai para a Tela Inicial; caso contrário, vai para o Login
+    if (usuarioSalvo != null && usuarioSalvo.isNotEmpty) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TelaInicial(username: usuarioSalvo),
+        ),
+      );
+    } else {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => TelaLogin(),
         ),
       );
-    });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SizedBox.expand(
-        child: Image.asset(
-          'assets/natflix_splash.png',
-          fit: BoxFit.cover,
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+
+          ],
         ),
       ),
     );

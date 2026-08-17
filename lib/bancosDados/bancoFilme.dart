@@ -17,8 +17,7 @@ class DatabaseHandler {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             titulo TEXT NOT NULL,
             categoria TEXT NOT NULL,
-            descricao TEXT NOT NULL,
-            imagem TEXT
+            descricao TEXT NOT NULL
           )
         ''');
 
@@ -27,8 +26,7 @@ class DatabaseHandler {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             titulo TEXT NOT NULL,
             categoria TEXT NOT NULL,
-            descricao TEXT NOT NULL,
-            imagem TEXT
+            descricao TEXT NOT NULL
           )
         ''');
       },
@@ -40,8 +38,7 @@ class DatabaseHandler {
               id INTEGER PRIMARY KEY AUTOINCREMENT,
               titulo TEXT NOT NULL,
               categoria TEXT NOT NULL,
-              descricao TEXT NOT NULL,
-              imagem TEXT
+              descricao TEXT NOT NULL
             )
           ''');
         }

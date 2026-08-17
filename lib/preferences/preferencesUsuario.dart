@@ -1,28 +1,17 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenciasUsuario {
+  static const String _keyUsuario = 'user_email';
 
-  // SALVAR USUÁRIO
-  static Future<void> salvarUsuario(String username) async {
+  // Salva o e-mail no login
+  static Future<void> salvarUsuario(String email) async {
     final prefs = await SharedPreferences.getInstance();
-
-    await prefs.setString(
-      'username',
-      username,
-    );
+    await prefs.setString(_keyUsuario, email);
   }
 
-  // BUSCAR USUÁRIO
-  static Future<String?> buscarUsuario() async {
+  // Busca o e-mail salvo (retorna null se não existir)
+  static Future<String?> obterUsuario() async {
     final prefs = await SharedPreferences.getInstance();
-
-    return prefs.getString('username');
-  }
-
-  // REMOVER USUÁRIO
-  static Future<void> removerUsuario() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    await prefs.remove('username');
+    return prefs.getString(_keyUsuario);
   }
 }

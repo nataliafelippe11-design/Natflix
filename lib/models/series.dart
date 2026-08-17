@@ -3,29 +3,25 @@ class Serie {
   final String titulo;
   final String categoria;
   final String descricao;
-  final String? imagem;
 
   Serie(
       {this.id,
       required this.titulo,
       required this.categoria,
-      required this.descricao,
-      this.imagem});
+      required this.descricao });
 
   Serie.fromMap(Map<String, dynamic> res)
       : id = res["id"],
         titulo = res["titulo"],
         categoria = res["categoria"],
-        descricao = res["descricao"],
-        imagem = res["imagem"];
+        descricao = res["descricao"];
         
     Map<String, Object?> toMap() {
     return {
       'id': id,
       'titulo': titulo,
       'categoria': categoria,
-      'descricao': descricao,
-      'imagem': imagem
+      'descricao': descricao
     };
   }
 } 

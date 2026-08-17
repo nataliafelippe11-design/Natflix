@@ -184,26 +184,6 @@ class _TelaSeriesState extends State<TelaSeries> {
                 child: ListTile(
 
                   // ==================================
-                  // IMAGEM
-                  // ==================================
-
-                  
-
-                leading: serie.imagem != null && serie.imagem!.isNotEmpty
-                    ? Image.asset(
-                        serie.imagem!,
-                        width: 50,
-                        height: 70,
-                        fit: BoxFit.cover,
-                      )
-                    : const Icon(
-                        Icons.tv,
-                        size: 40,
-                      ),
-
-
-
-                  // ==================================
                   // TÍTULO
                   // ==================================
 

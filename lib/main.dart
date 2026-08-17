@@ -3,7 +3,13 @@ import 'telas/telaLogin.dart';
 import 'telas/splashScreen.dart';
 
 void main() {
-  runApp(MyApp());
+  // Obrigatório para executar código assíncrono antes do runApp
+  WidgetsFlutterBinding.ensureInitialized(); 
+
+  runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
+    home: TelaSplash(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -48,9 +54,6 @@ class MyApp extends StatelessWidget {
             ),
           
             fontFamily: "BebasNeue",
+            
   ),
-
-  home: const SplashScreen(),
-    );
-  }
-}
+    );}}

@@ -176,22 +176,6 @@ class _TelaFilmesState extends State<TelaFilmes> {
                 child: ListTile(
 
                   // =================================
-                  // IMAGEM
-                  // =================================
-
-                  leading: filme.imagem != null && filme.imagem!.isNotEmpty
-                      ? Image.asset(
-                          filme.imagem!,
-                          width: 50,
-                          height: 70,
-                          fit: BoxFit.cover,
-                        )
-                      : const Icon(
-                          Icons.movie,
-                          size: 40,
-                        ),
-
-                  // =================================
                   // TÍTULO
                   // =================================
 

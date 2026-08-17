@@ -21,8 +21,6 @@ class TelaDetalhes extends StatelessWidget {
 
     final descricao = filme?.descricao ?? serie!.descricao;
 
-    final imagem = filme?.imagem ?? serie!.imagem;
-
     return Scaffold(
 
       appBar: AppBar(
@@ -36,13 +34,6 @@ class TelaDetalhes extends StatelessWidget {
         child: Column(
 
           children: [
-
-            Image.asset(
-              imagem!,
-              height: 250,
-            ),
-
-            SizedBox(height: 20),
 
             Text(
               titulo,

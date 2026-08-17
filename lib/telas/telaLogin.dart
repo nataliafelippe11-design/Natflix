@@ -110,6 +110,8 @@ class _TelaLoginState extends State<TelaLogin> {
                       loginData.username,
                     );
 
+                      if (!mounted) return;
+
                     // VAI PARA A TELA INICIAL
                     Navigator.pushReplacement(
                       context,

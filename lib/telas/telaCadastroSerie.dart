@@ -27,7 +27,6 @@ class _TelaCadastroSerieState extends State<TelaCadastroSerie> {
   final tituloController = TextEditingController();
   final categoriaController = TextEditingController();
   final descricaoController = TextEditingController();
-  final imagemController = TextEditingController();
 
   // BANCO DE DADOS
   late DatabaseHandler handler;
@@ -44,7 +43,6 @@ class _TelaCadastroSerieState extends State<TelaCadastroSerie> {
       tituloController.text = widget.serie!.titulo;
       categoriaController.text = widget.serie!.categoria;
       descricaoController.text = widget.serie!.descricao;
-      imagemController.text = widget.serie!.imagem ?? "";
     }
   }
 
@@ -63,7 +61,6 @@ class _TelaCadastroSerieState extends State<TelaCadastroSerie> {
         titulo: tituloController.text,
         categoria: categoriaController.text,
         descricao: descricaoController.text,
-        imagem: imagemController.text,
       );
 
       await handler.insertSerie([serie]);
@@ -83,7 +80,6 @@ class _TelaCadastroSerieState extends State<TelaCadastroSerie> {
         titulo: tituloController.text,
         categoria: categoriaController.text,
         descricao: descricaoController.text,
-        imagem: imagemController.text,
       );
 
       await handler.updateSerie(serieAtualizada);
@@ -104,7 +100,6 @@ class _TelaCadastroSerieState extends State<TelaCadastroSerie> {
     tituloController.dispose();
     categoriaController.dispose();
     descricaoController.dispose();
-    imagemController.dispose();
 
     super.dispose();
   }
@@ -286,17 +281,6 @@ class _TelaCadastroSerieState extends State<TelaCadastroSerie> {
             ),
 
             const SizedBox(height: 15),
-
-            // IMAGEM
-            TextField(
-              controller: imagemController,
-              decoration: const InputDecoration(
-                labelText: "Imagem (assets/arquivo.jpg)",
-                border: OutlineInputBorder(),
-              ),
-            ),
-
-            const SizedBox(height: 30),
 
             // BOTÃO
             SizedBox(
