@@ -49,11 +49,11 @@ class _TelaSplashState extends State<TelaSplash> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+        child: Image.asset(
+          'assets/natflix_splash.png.png',
+          fit: BoxFit.contain,
+          width: 250,
 
-          ],
         ),
       ),
     );

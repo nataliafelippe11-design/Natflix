@@ -3,57 +3,57 @@ import 'telas/telaLogin.dart';
 import 'telas/splashScreen.dart';
 
 void main() {
-  // Obrigatório para executar código assíncrono antes do runApp
-  WidgetsFlutterBinding.ensureInitialized(); 
+  WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const MaterialApp(
-    debugShowCheckedModeBanner: false,
-    home: TelaSplash(),
-  ));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
 
-        theme: ThemeData(
+      theme: ThemeData(
+        scaffoldBackgroundColor:
+            const Color.fromARGB(255, 175, 175, 175),
 
-      scaffoldBackgroundColor: const Color.fromARGB(255, 175, 175, 175),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color.fromARGB(255, 171, 13, 2),
+          foregroundColor: Colors.white,
+          centerTitle: true,
+        ),
 
-            appBarTheme: const AppBarTheme(
-              backgroundColor: Color.fromARGB(255, 171, 13, 2),
-              foregroundColor: Colors.white,
-              centerTitle: true,
-            ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+          ),
+        ),
 
-            elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-                foregroundColor: Colors.white,
-              ),
-            ),
+        cardTheme: CardThemeData(
+          color: const Color.fromARGB(255, 0, 114, 13),
+          elevation: 6,
+        ),
 
-            cardTheme: CardThemeData(
-              color: const Color.fromARGB(255, 0, 114, 13),
-              elevation: 6,
-            ),
+        textTheme: const TextTheme(
+          titleLarge: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
 
-            textTheme: const TextTheme(
+          bodyMedium: TextStyle(
+            color: Colors.white,
+          ),
+        ),
 
-              titleLarge: TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+        fontFamily: "BebasNeue",
+      ),
 
-              bodyMedium: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          
-            fontFamily: "BebasNeue",
-            
-  ),
-    );}}
+      home: const TelaSplash(),
+    );
+  }
+}
