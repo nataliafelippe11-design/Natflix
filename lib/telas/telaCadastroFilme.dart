@@ -8,6 +8,8 @@ import 'telaPerfil.dart';
 import 'telaFavoritos.dart';
 
 class TelaCadastroFilme extends StatefulWidget {
+  // se essa tela receber um filme, ela vai editar
+  // se essa tela não receber, ela vai cadastrar
   final Filme? filme;
 
   const TelaCadastroFilme({
@@ -23,14 +25,15 @@ class _TelaCadastroFilmeState extends State<TelaCadastroFilme> {
   final tituloController = TextEditingController();
   final categoriaController = TextEditingController();
   final descricaoController = TextEditingController();
+   // diz o objeto responsável pela comunicação com o banco.
   late DatabaseHandler handler;
 
   @override
   void initState() {
     super.initState();
-
+   //cria um objeto no banco, para realizar operações nele
     handler = DatabaseHandler();
-
+   //verifica se a tela recebeu um filme, se sim, estamso editando ele
     if (widget.filme != null) {
       tituloController.text = widget.filme!.titulo;
       categoriaController.text = widget.filme!.categoria;
@@ -46,22 +49,23 @@ class _TelaCadastroFilmeState extends State<TelaCadastroFilme> {
         categoria: categoriaController.text,
         descricao: descricaoController.text,
       );
-
+   //responsável por atualizar o filme
       await handler.updateFilme(filmeAtualizado);
-
+   //vê se a tela ainda esta processando antes de ir para a tela anterior a essa
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Filme atualizado com sucesso!"),
         ),
       );
+    //se o anterior não acontecer, ele vai criar um novo objeto para criar filmes
     } else {
       Filme filme = Filme(
         titulo: tituloController.text,
         categoria: categoriaController.text,
         descricao: descricaoController.text,
       );
-
+   //insere o filme
       await handler.insertFilme([filme]);
 
       if (!mounted) return;
@@ -71,7 +75,7 @@ class _TelaCadastroFilmeState extends State<TelaCadastroFilme> {
         ),
       );
     }
-
+  //limpa os campos, antes de salvar ou atualizar
     tituloController.clear();
     categoriaController.clear();
     descricaoController.clear();
@@ -220,6 +224,7 @@ class _TelaCadastroFilmeState extends State<TelaCadastroFilme> {
             const SizedBox(height: 15),
             TextField(
               controller: descricaoController,
+              maxLines: 3,
               decoration: const InputDecoration(
                 labelText: "Descrição",
                 border: OutlineInputBorder(),

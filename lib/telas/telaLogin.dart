@@ -7,7 +7,7 @@ class TelaLogin extends StatefulWidget {
   @override
   _TelaLoginState createState() => _TelaLoginState();
 }
-
+//esta usando campos como e-mail e senha para utilizar o formulário
 class LoginData {
 
   String username = "";
@@ -53,7 +53,7 @@ class _TelaLoginState extends State<TelaLogin> {
                   hintText: "nome@email.com",
                   border: OutlineInputBorder(),
                 ),
-
+                //valida o campo email
                 validator: (value) {
 
                   if (value == null || value.isEmpty) {
@@ -79,7 +79,7 @@ class _TelaLoginState extends State<TelaLogin> {
                   labelText: "Senha",
                   border: OutlineInputBorder(),
                 ),
-
+                //valida o campo senha
                 validator: (value) {
 
                   if (value == null || value.length < 8) {

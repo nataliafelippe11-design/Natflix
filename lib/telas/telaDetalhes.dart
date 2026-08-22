@@ -1,3 +1,4 @@
+//toda a tela foi adaptada em razão do banco
 import 'package:flutter/material.dart';
 import '../models/filmes.dart';
 import '../models/series.dart';

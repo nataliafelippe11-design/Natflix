@@ -32,13 +32,8 @@ class _TelaFilmesState extends State<TelaFilmes> {
     });
   }
 
-  // ==========================================
-  // EXCLUIR FILME
-  // ==========================================
-
   Future<void> excluirFilme(Filme filme) async {
 
-    // Confirmação antes de excluir
     final confirmar = await showDialog<bool>(
       context: context,
 
@@ -55,8 +50,6 @@ class _TelaFilmesState extends State<TelaFilmes> {
           ),
 
           actions: [
-
-            // CANCELAR
             TextButton(
               onPressed: () {
                 Navigator.pop(
@@ -69,8 +62,6 @@ class _TelaFilmesState extends State<TelaFilmes> {
                 "Cancelar",
               ),
             ),
-
-            // EXCLUIR
             TextButton(
               onPressed: () {
                 Navigator.pop(
@@ -88,14 +79,12 @@ class _TelaFilmesState extends State<TelaFilmes> {
       },
     );
 
-    // Se confirmou
     if (confirmar == true) {
 
       await handler.deleteFilme(
         filme.id!,
       );
 
-      // Atualiza a tela
       setState(() {});
 
       ScaffoldMessenger.of(context).showSnackBar(
@@ -107,10 +96,6 @@ class _TelaFilmesState extends State<TelaFilmes> {
       );
     }
   }
-
-  // ==========================================
-  // BUILD
-  // ==========================================
 
   @override
   Widget build(BuildContext context) {
@@ -127,7 +112,6 @@ class _TelaFilmesState extends State<TelaFilmes> {
 
         builder: (context, snapshot) {
 
-          // CARREGANDO
           if (snapshot.connectionState ==
               ConnectionState.waiting) {
 
@@ -136,7 +120,6 @@ class _TelaFilmesState extends State<TelaFilmes> {
             );
           }
 
-          // ERRO
           if (snapshot.hasError) {
 
             return const Center(
@@ -146,7 +129,6 @@ class _TelaFilmesState extends State<TelaFilmes> {
             );
           }
 
-          // NENHUM FILME
           if (!snapshot.hasData ||
               snapshot.data!.isEmpty) {
 
@@ -159,7 +141,6 @@ class _TelaFilmesState extends State<TelaFilmes> {
 
           List<Filme> filmes = snapshot.data!;
 
-          // LISTA
           return ListView.builder(
 
             itemCount: filmes.length,
@@ -175,25 +156,13 @@ class _TelaFilmesState extends State<TelaFilmes> {
 
                 child: ListTile(
 
-                  // =================================
-                  // TÍTULO
-                  // =================================
-
                   title: Text(
                     filme.titulo,
                   ),
 
-                  // =================================
-                  // DESCRIÇÃO
-                  // =================================
-
                   subtitle: Text(
                     filme.descricao,
                   ),
-
-                  // =================================
-                  // BOTÕES
-                  // =================================
 
                   trailing: Row(
 
@@ -201,11 +170,6 @@ class _TelaFilmesState extends State<TelaFilmes> {
                         MainAxisSize.min,
 
                     children: [
-
-                      // =============================
-                      // EDITAR
-                      // =============================
-
                       IconButton(
 
                         icon: const Icon(
@@ -230,15 +194,9 @@ class _TelaFilmesState extends State<TelaFilmes> {
                               ),
                             ),
                           );
-
-                          // Atualiza a lista
                           setState(() {});
                         },
                       ),
-
-                      // =============================
-                      // EXCLUIR
-                      // =============================
 
                       IconButton(
 
@@ -258,10 +216,6 @@ class _TelaFilmesState extends State<TelaFilmes> {
                       ),
                     ],
                   ),
-
-                  // =================================
-                  // DETALHES
-                  // =================================
 
                   onTap: () {
 

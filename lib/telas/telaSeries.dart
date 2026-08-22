@@ -26,16 +26,12 @@ class _TelaSeriesState extends State<TelaSeries> {
     super.initState();
 
     handler = DatabaseHandler();
-
+//chama o banco
     handler.initializeDB().whenComplete(() {
       setState(() {});
     });
   }
-
-  // ==========================================
-  // DELETE - EXCLUIR SÉRIE
-  // ==========================================
-
+//excluir do crud
   Future<void> excluirSerie(Serie serie) async {
 
     final confirmar = await showDialog<bool>(
@@ -55,7 +51,6 @@ class _TelaSeriesState extends State<TelaSeries> {
 
           actions: [
 
-            // CANCELAR
             TextButton(
 
               onPressed: () {
@@ -67,7 +62,6 @@ class _TelaSeriesState extends State<TelaSeries> {
               ),
             ),
 
-            // EXCLUIR
             TextButton(
 
               onPressed: () {
@@ -83,9 +77,9 @@ class _TelaSeriesState extends State<TelaSeries> {
       },
     );
 
-    // Se confirmou a exclusão
+    // se confirmou a exclusão
     if (confirmar == true) {
-
+    //deleta a serie
       await handler.deleteSerie(
         serie.id!,
       );
@@ -104,10 +98,6 @@ class _TelaSeriesState extends State<TelaSeries> {
     }
   }
 
-  // ==========================================
-  // BUILD
-  // ==========================================
-
   @override
   Widget build(BuildContext context) {
 
@@ -116,16 +106,12 @@ class _TelaSeriesState extends State<TelaSeries> {
       appBar: AppBar(
         title: Text(widget.categoria),
       ),
-
+  //busca a série no banco
       body: FutureBuilder<List<Serie>>(
 
         future: handler.retrieveSerie(),
 
         builder: (context, snapshot) {
-
-          // ==================================
-          // CARREGANDO
-          // ==================================
 
           if (snapshot.connectionState ==
               ConnectionState.waiting) {
@@ -134,11 +120,6 @@ class _TelaSeriesState extends State<TelaSeries> {
               child: CircularProgressIndicator(),
             );
           }
-
-          // ==================================
-          // ERRO
-          // ==================================
-
           if (snapshot.hasError) {
 
             return const Center(
@@ -147,10 +128,6 @@ class _TelaSeriesState extends State<TelaSeries> {
               ),
             );
           }
-
-          // ==================================
-          // NENHUMA SÉRIE
-          // ==================================
 
           if (!snapshot.hasData ||
               snapshot.data!.isEmpty) {
@@ -163,11 +140,7 @@ class _TelaSeriesState extends State<TelaSeries> {
           }
 
           List<Serie> series = snapshot.data!;
-
-          // ==================================
-          // LISTA DE SÉRIES
-          // ==================================
-
+//lista das séries
           return ListView.builder(
 
             itemCount: series.length,
@@ -183,25 +156,13 @@ class _TelaSeriesState extends State<TelaSeries> {
 
                 child: ListTile(
 
-                  // ==================================
-                  // TÍTULO
-                  // ==================================
-
                   title: Text(
                     serie.titulo,
                   ),
 
-                  // ==================================
-                  // DESCRIÇÃO
-                  // ==================================
-
                   subtitle: Text(
                     serie.descricao,
                   ),
-
-                  // ==================================
-                  // BOTÕES
-                  // ==================================
 
                   trailing: Row(
 
@@ -209,11 +170,7 @@ class _TelaSeriesState extends State<TelaSeries> {
                         MainAxisSize.min,
 
                     children: [
-
-                      // ==============================
-                      // EDITAR
-                      // ==============================
-
+        //update do crud
                       IconButton(
 
                         icon: const Icon(
@@ -244,11 +201,7 @@ class _TelaSeriesState extends State<TelaSeries> {
                           setState(() {});
                         },
                       ),
-
-                      // ==============================
-                      // EXCLUIR
-                      // ==============================
-
+//delet do crud
                       IconButton(
 
                         icon: const Icon(
@@ -268,10 +221,6 @@ class _TelaSeriesState extends State<TelaSeries> {
                       ),
                     ],
                   ),
-
-                  // ==================================
-                  // DETALHES
-                  // ==================================
 
                   onTap: () {
 

@@ -18,9 +18,7 @@ class TelaInicial extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // ==========================================
     // DIALOG FILMES
-    // ==========================================
 
     Future<void> mostrarFilmes() async {
 
@@ -35,9 +33,8 @@ class TelaInicial extends StatelessWidget {
 
             children: [
 
-              // ==============================
+
               // AÇÃO
-              // ==============================
 
               SimpleDialogOption(
 
@@ -58,9 +55,7 @@ class TelaInicial extends StatelessWidget {
                 child: const Text("Ação"),
               ),
 
-              // ==============================
               // COMÉDIA
-              // ==============================
 
               SimpleDialogOption(
 
@@ -86,9 +81,7 @@ class TelaInicial extends StatelessWidget {
       );
     }
 
-    // ==========================================
     // DIALOG SÉRIES
-    // ==========================================
 
     Future<void> mostrarSeries() async {
 
@@ -103,9 +96,7 @@ class TelaInicial extends StatelessWidget {
 
             children: [
 
-              // ==============================
               // DRAMA
-              // ==============================
 
               SimpleDialogOption(
 
@@ -126,9 +117,7 @@ class TelaInicial extends StatelessWidget {
                 child: const Text("Drama"),
               ),
 
-              // ==============================
               // COMÉDIA
-              // ==============================
 
               SimpleDialogOption(
 
@@ -154,15 +143,11 @@ class TelaInicial extends StatelessWidget {
       );
     }
 
-    // ==========================================
     // SCAFFOLD
-    // ==========================================
 
     return Scaffold(
 
-      // ==========================================
       // DRAWER
-      // ==========================================
 
       drawer: Drawer(
 
@@ -170,9 +155,7 @@ class TelaInicial extends StatelessWidget {
 
           children: [
 
-            // ==================================
             // CABEÇALHO
-            // ==================================
 
             DrawerHeader(
 
@@ -208,9 +191,7 @@ class TelaInicial extends StatelessWidget {
               ),
             ),
 
-            // ==================================
             // INÍCIO
-            // ==================================
 
             ListTile(
 
@@ -229,9 +210,7 @@ class TelaInicial extends StatelessWidget {
               },
             ),
 
-            // ==================================
             // FILMES
-            // ==================================
 
             ListTile(
 
@@ -261,9 +240,7 @@ class TelaInicial extends StatelessWidget {
               },
             ),
 
-            // ==================================
             // SÉRIES
-            // ==================================
 
             ListTile(
 
@@ -293,9 +270,7 @@ class TelaInicial extends StatelessWidget {
               },
             ),
 
-            // ==================================
             // CADASTRAR FILME
-            // ==================================
 
             ListTile(
 
@@ -323,9 +298,7 @@ class TelaInicial extends StatelessWidget {
               },
             ),
 
-            // ==================================
             // CADASTRAR SÉRIE
-            // ==================================
 
             ListTile(
 

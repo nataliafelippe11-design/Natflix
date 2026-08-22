@@ -14,19 +14,24 @@ class _TelaSplashState extends State<TelaSplash> {
   @override
   void initState() {
     super.initState();
+
+    //abre a tela splash e verifica o usuário salvo
     verificarSessao();
   }
 
+  //inicia uma função que pode terminar no futuro
+
   Future<void> verificarSessao() async {
 
+  //demora 2 s para abrir o login, pois espera a ação do futuro terminar
     await Future.delayed(const Duration(seconds: 2));
 
-    // Busca o usuário salvo
+    // busca o usuário salvo
     String? usuarioSalvo = await PreferenciasUsuario.obterUsuario();
 
     if (!mounted) return;
 
-    // Se encontrou o usuário, vai para a Tela Inicial; caso contrário, vai para o Login
+    // se encontrou o usuário, vai para a Tela Inicial; caso contrário, vai para o Login
     if (usuarioSalvo != null && usuarioSalvo.isNotEmpty) {
       Navigator.pushReplacement(
         context,
@@ -43,7 +48,7 @@ class _TelaSplashState extends State<TelaSplash> {
       );
     }
   }
-
+  //mostra a imagem
   @override
   Widget build(BuildContext context) {
     return Scaffold(
