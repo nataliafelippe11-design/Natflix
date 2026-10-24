@@ -24,11 +24,11 @@ class _TelaPerfilState extends State<TelaPerfil> {
       filmesPorSemana = (minutos * 7) ~/ 120;
 
       if (minutos < 60) {
-        categoriaUsuario = "🍿 Espectadora Casual";
+        categoriaUsuario = " Espectadora Casual";
       } else if (minutos <= 180) {
-        categoriaUsuario = "🎬 Maratonista";
+        categoriaUsuario = " Maratonista";
       } else {
-        categoriaUsuario = "🔥 Super Maratonista";
+        categoriaUsuario = " Super Maratonista";
       }
 
       mostrarResultado = true;
@@ -129,7 +129,7 @@ class _TelaPerfilState extends State<TelaPerfil> {
                             const SizedBox(height: 10),
 
                             Text(
-                              "📺 $episodiosPorDia episódios por dia",
+                              " $episodiosPorDia episódios por dia",
                               style:
                                   const TextStyle(fontSize: 18),
                             ),
@@ -137,7 +137,7 @@ class _TelaPerfilState extends State<TelaPerfil> {
                             const SizedBox(height: 5),
 
                             Text(
-                              "🎥 $filmesPorSemana filmes por semana",
+                              " $filmesPorSemana filmes por semana",
                               style:
                                   const TextStyle(fontSize: 18),
                             ),

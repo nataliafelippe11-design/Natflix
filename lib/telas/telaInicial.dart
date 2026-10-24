@@ -5,6 +5,7 @@ import 'telaPerfil.dart';
 import 'telaFavoritos.dart';
 import 'telaCadastroFilme.dart';
 import 'telaCadastroSerie.dart';
+import 'cardFrase.dart';
 
 class TelaInicial extends StatelessWidget {
 
@@ -328,10 +329,6 @@ class TelaInicial extends StatelessWidget {
 
             const Divider(),
 
-            // ==================================
-            // PERFIL
-            // ==================================
-
             ListTile(
 
               leading: const Icon(
@@ -357,10 +354,6 @@ class TelaInicial extends StatelessWidget {
                 );
               },
             ),
-
-            // ==================================
-            // FAVORITOS
-            // ==================================
 
             ListTile(
 
@@ -391,20 +384,12 @@ class TelaInicial extends StatelessWidget {
         ),
       ),
 
-      // ==========================================
-      // APP BAR
-      // ==========================================
-
       appBar: AppBar(
 
         title: const Text(
           "Natflix",
         ),
       ),
-
-      // ==========================================
-      // CONTEÚDO
-      // ==========================================
 
       body: Center(
 
@@ -414,10 +399,6 @@ class TelaInicial extends StatelessWidget {
               MainAxisAlignment.center,
 
           children: [
-
-            // ==================================
-            // USUÁRIO
-            // ==================================
 
             Text(
 
@@ -436,10 +417,6 @@ class TelaInicial extends StatelessWidget {
               height: 40,
             ),
 
-            // ==================================
-            // BOTÃO FILMES
-            // ==================================
-
             ElevatedButton(
 
               onPressed: mostrarFilmes,
@@ -453,10 +430,6 @@ class TelaInicial extends StatelessWidget {
               height: 20,
             ),
 
-            // ==================================
-            // BOTÃO SÉRIES
-            // ==================================
-
             ElevatedButton(
 
               onPressed: mostrarSeries,
@@ -465,6 +438,7 @@ class TelaInicial extends StatelessWidget {
                 "Séries",
               ),
             ),
+            const CardFrase(),
           ],
         ),
       ),
