@@ -3,20 +3,14 @@ import 'package:http/http.dart' as http;
 
 class FraseApi {
   static const String url =
-      'https://movie-quote-api.herokuapp.com/v1/quote/';
+      'https://movie-quotes-api.vercel.app/api/v1/quotes';
 
-  
-static Future<Map<String, dynamic>> buscarFrase() async {
-  try {
-    print('Iniciando consulta à API...');
-    print('Endereço: $url');
-
+  static Future<Map<String, dynamic>> buscarFrase() async {
     final resposta = await http
         .get(Uri.parse(url))
         .timeout(const Duration(seconds: 15));
 
-    print('Status HTTP: ${resposta.statusCode}');
-    print('Resposta recebida: ${resposta.body}');
+    print('STATUS HTTP: ${resposta.statusCode}');
 
     if (resposta.statusCode != 200) {
       throw Exception(
@@ -26,16 +20,52 @@ static Future<Map<String, dynamic>> buscarFrase() async {
 
     final dados = jsonDecode(resposta.body);
 
-    if (dados is Map<String, dynamic>) {
-      return dados;
+    print('JSON RECEBIDO DA API: $dados');
+
+    if (dados is! Map<String, dynamic>) {
+      throw Exception('Formato de resposta inesperado.');
     }
 
-    throw Exception('A resposta não é um objeto JSON.');
-  } catch (erro, pilha) {
-    print('ERRO AO CONSULTAR A API: $erro');
-    print(pilha);
-    rethrow;
-  }
-}
+    final filmes = dados['data'];
 
+    if (filmes is! List || filmes.isEmpty) {
+      throw Exception('Nenhum filme encontrado na API.');
+    }
+
+    final List<Map<String, dynamic>> todasFrases = [];
+
+    for (final filme in filmes) {
+      if (filme is! Map<String, dynamic>) {
+        continue;
+      }
+
+      final quotes = filme['quotes'];
+
+      if (quotes is! List) {
+        continue;
+      }
+
+      for (final quote in quotes) {
+        if (quote is String && quote.trim().isNotEmpty) {
+          todasFrases.add({
+            'quote': quote,
+            'title': filme['title'] ?? 'Filme desconhecido',
+            'year': filme['year'],
+          });
+        }
+      }
+    }
+
+    if (todasFrases.isEmpty) {
+      throw Exception('Nenhuma frase válida encontrada.');
+    }
+
+    // Seleciona uma frase com base no dia do mês.
+    final dia = DateTime.now().day;
+    final indice = (dia - 1) % todasFrases.length;
+
+    final fraseSelecionada = todasFrases[indice];
+
+    return fraseSelecionada;
+  }
 }

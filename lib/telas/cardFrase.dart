@@ -17,12 +17,6 @@ class _CardFraseState extends State<CardFrase> {
     frase = FraseApi.buscarFrase();
   }
 
-  void atualizarFrase() {
-    setState(() {
-      frase = FraseApi.buscarFrase();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -56,10 +50,19 @@ class _CardFraseState extends State<CardFrase> {
                 }
 
                 if (snapshot.hasError) {
+                  print('ERRO REAL DA FRASE: ${snapshot.error}');
+
                   return const Text(
-                    'Não foi possível carregar a frase. '
-                    'Verifique a conexão e tente novamente.',
+                    'Não foi possível carregar a frase.',
                     textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white),
+                  );
+                }
+
+                if (!snapshot.hasData) {
+                  return const Text(
+                    'Nenhuma frase disponível.',
+                    style: TextStyle(color: Colors.white),
                   );
                 }
 
@@ -67,8 +70,7 @@ class _CardFraseState extends State<CardFrase> {
 
                 return Text(
                   dados['quote']?.toString() ??
-                      dados['quoteText']?.toString() ??
-                      dados.toString(),
+                    'Frase indisponível.',
                   textAlign: TextAlign.center,
                   style: const TextStyle(
                     fontSize: 18,
@@ -76,12 +78,6 @@ class _CardFraseState extends State<CardFrase> {
                   ),
                 );
               },
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: atualizarFrase,
-              icon: const Icon(Icons.refresh),
-              label: const Text('Nova frase'),
             ),
           ],
         ),
