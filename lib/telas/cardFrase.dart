@@ -69,12 +69,14 @@ class _CardFraseState extends State<CardFrase> {
                 final dados = snapshot.data!;
 
                 return Text(
-                  dados['quote']?.toString() ??
-                    'Frase indisponível.',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    color: Colors.white,
+                      dados['quote']?.toString() ??
+                          'Frase indisponível.',
+                      textAlign: TextAlign.center,
+                      maxLines: 6,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
                   ),
                 );
               },
